@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<h1>Products</h1>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="width:auto"
+       asp-controller="Product" asp-action="Create">
+        Add new product
+    </a>
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th> S/N </th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Brand</th>
+                        <th>Stock</th>
+                        <th>Selling Price</th>
+                        @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <th>Cost Price</th>
+                            <th></th>
+                            <th></th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Category.Name</td>
+                            <td>@item.Brand.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.SellingPrice</td>
+                            @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                            {
+                                <td>@item.CostPrice</td>
+                                <td><a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a></td>
+                                <td><a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Product created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button to create Product
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="Product" asp-action="Create">
+                Add new Product
+            </a>
+        </div>
+    </div>
+
+
+
+}

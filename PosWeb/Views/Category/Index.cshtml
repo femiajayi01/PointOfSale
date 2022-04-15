@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h1>Categories</h1>
+
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="width:auto"
+       asp-controller="Category" asp-action="Create">
+        Add new category
+    </a>
+    <div class="body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th> S/N </th>
+                    <th>Category</th>
+                    @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <th></th>
+                        <th></th>
+                    }
+
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        @if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <td><a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a></td>
+                            <td><a asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            No Category created yet
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Use the button to create Category
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="Category" asp-action="Create">
+                Add new category
+            </a>
+        </div>
+    </div>
+
+
+
+}
