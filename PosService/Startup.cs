@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PosCore;
 using PosCore.Interfaces;
 using PosCore.Models;
 using PosCore.Data;
@@ -38,6 +39,9 @@ namespace PosService
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             /*services.AddScoped<IRedisRepository, RedisRepository>();*/
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PosService", Version = "v1" });

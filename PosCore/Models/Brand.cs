@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PosCore.Models
 {
-    public class Brand
+    public class Brand  // : IEntity
     {
       //  [Required]
         public string Id { get; set; } = $"brand:{Guid.NewGuid().ToString()}";

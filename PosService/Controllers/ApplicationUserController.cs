@@ -82,7 +82,10 @@ namespace PosService.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("UserID", user.Id.ToString()),
+                        new Claim("UserID", user.Id),
+                        new Claim("FirstName", user.FirstName),
+                        new Claim("LastName", user.LastName),
+                        new Claim("Email", user.Email),
                         new Claim(_options.ClaimsIdentity.RoleClaimType, role.FirstOrDefault())
                     }),
                     Expires = DateTime.UtcNow.AddDays(1), // DateTime.UtcNow.AddMinutes(5),
@@ -124,9 +127,6 @@ namespace PosService.Controllers
         // GET : /api/ApplicationUser/UserProfile
         public async Task<object> GetUserProfile()
         {
-            /*            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-                        var user = await _userManager.FindByIdAsync(userId);
-                        return user;*/
 
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
